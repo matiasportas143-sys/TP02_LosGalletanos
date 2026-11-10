@@ -1,0 +1,24 @@
+# BITACORA.md
+
+| Nº | Acción / comando | Resultado | Problema | Solución intentada | Estado |
+|----|------------------|-----------|----------|--------------------|--------|
+| 1 | Clonar el repo: `git clone https://github.com/tsamaan/UadeRobotLab.git` | Clonó sin errores (11130 objetos) | Primero intenté `cd TP02_Programacion1` y dio "ruta no existe" | Vi en el prompt que ya estaba parado en esa carpeta, así que no hacía falta el `cd` | RESUELTO |
+| 2 | Abrir el README general y buscar `INSTALACION.md` | No estaba en la raíz | Abrí el README del repo completo, no el de mi materia | Los archivos están en `05LaboratoriosTPs/TP02_Programacion_I` | RESUELTO |
+| 3 | Ver la versión de Python en el panel de VS Code | Detectó Python 3.14.5 | - | - | RESUELTO |
+| 4 | `py -3 -m pip install mujoco` | "py no se reconoce" | El launcher `py` no estaba disponible | Probé `python` y `python3` | NUEVO ERROR |
+| 5 | `python3 -m pip install mujoco` y `python -m pip install mujoco` | "Python was not found; run without arguments to install from the Microsoft Store" | Windows interceptaba el comando con un acceso directo falso a la Microsoft Store | Desactivé los alias de ejecución de aplicaciones de Python | PARCIAL |
+| 6 | `python -m pip install mujoco` (después de desactivar los alias) | Cambió el error: "python no se reconoce" | Ya no había alias, pero Python no estaba en el PATH | Reinstalar Python | NUEVO ERROR |
+| 7 | Reinstalar Python 3.14.7 con "Add python.exe to PATH" tildado; `python --version` | Devuelve `Python 3.14.7` | Al principio apareció el "Python Install Manager", que no tiene esa casilla | Usé el instalador clásico de python.org | RESUELTO |
+| 8 | `python -m pip install mujoco` y `python -c "import mujoco; print(mujoco.__version__)"` | Instaló y devolvió `3.13.0` | - | - | RESUELTO |
+| 9 | `python -m sim --solo-revisar` | `[OK]` Python, `[OK]` MuJoCo, `[OK]` Modelos Unitree. "Todo listo" | - | - | RESUELTO |
+| 10 | `.\INICIAR_SIMULADOR.bat`, elegí 1 | Se abrió la escena `g1_29dof` (humanoide) | Elegí el robot equivocado; el TP usa el Go2 | Volví a ejecutarlo y elegí 2 | RESUELTO |
+| 11 | `.\INICIAR_SIMULADOR.bat` desde `TP02_Programacion1` | "no se reconoce como nombre de un cmdlet" | Estaba en la carpeta contenedora, no en la del TP | Usé `cd` con la ruta completa a `TP02_Programacion_I` | RESUELTO |
+| 12 | `.\EJECUTAR_MI_CODIGO.bat` | `NoHaySimulador: No encuentro el simulador` | El simulador no estaba abierto | Abrí primero el simulador y recién después el programa | RESUELTO |
+| 13 | Simulador y programa en la misma terminal | El simulador se cerró ("Simulador cerrado") | Lo que escribí en esa terminal lo cerró | Usé dos terminales separadas, sin tocar la del simulador | RESUELTO |
+| 14 | `.\EJECUTAR_MI_CODIGO.bat` con el simulador abierto (plantilla sin completar) | `[OK] Conectado a Unitree Go2`, límites 0.2 m/s, 0.5 rad/s, 10 s; `[OK] Desconectado` | - | - | RESUELTO |
+| 15 | Revisar `mi_tp02.py` antes de correrlo | Dos errores de estructura | `comando_es_valido` quedó definida dos veces (una adentro de otra) y en `ejecutar_comando` faltaba `tipo = comando[0]` | Borré la función duplicada y agregué la asignación de `tipo` | RESUELTO |
+| 16 | `MISION_BASICA` con el simulador abierto | Reporte: 4 ejecutados, 0 rechazados. El Go2 dibujó una L | Al principio no veía el movimiento | Tenía el simulador abierto en otra terminal y la ventana visible | RESUELTO |
+| 17 | `.\EJECUTAR_MI_CODIGO.bat` otra vez | `NoHaySimulador` de nuevo | El simulador estaba abierto pero esperando que eligiera robot (`Elegi 1 o 2`) | Escribí 2 y Enter | RESUELTO |
+| 18 | `MISION_CON_ERRORES`: cambié `MISION_BASICA` por `MISION_CON_ERRORES` en el `main()` y ejecuté | Primera corrida: 7 ejecutados, 4 rechazados. Después de corregir `generar_reporte`: 4 ejecutados, 7 rechazados, con el motivo de cada uno | 3 comandos inválidos (velocidad 0.9, tiempo 50, giro 3.0) los frenó el robot con `ErrorDeSeguridad` y el reporte los contaba como ejecutados | Agregué `or item.startswith("Error")` en la condición de `generar_reporte` | RESUELTO |
+| 19 | `MISION_CUADRADO`: mismo procedimiento (simulador con opción 2, y en otra terminal `EJECUTAR_MI_CODIGO.bat`) | Reporte: 9 ejecutados, 0 rechazados. El perro dibujó un cuadrado | - | - | RESUELTO |
+| 20 | Misión propia: agregué `MISION_PROPIA` (6 comandos, uno inválido a propósito) a `misiones.py`, la importé y la usé en el `main()` | Reporte: 5 ejecutados, 1 rechazado (`('avanzar', 0.2, -1.0)`, tiempo negativo) | Al principio el reporte era el de `MISION_CON_ERRORES` porque el programa seguía corriendo la misión anterior | Revisé el import y la línea del `main()`, guardé los archivos y volví a ejecutar | RESUELTO |
